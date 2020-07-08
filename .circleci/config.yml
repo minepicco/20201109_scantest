@@ -131,4 +131,3 @@ jobs:
           name: deployment
           command: |
             kubectl apply -f web1.yaml
-            kubectl get pods -o wide
