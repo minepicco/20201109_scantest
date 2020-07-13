@@ -12,15 +12,17 @@ spec:
     tier: frontend
   type: LoadBalancer
 ---
-apiVersion: extensions/v1beta1
+apiVersion: app/v1
 kind: Deployment
 metadata:
   name: web
   labels:
     app: web
 spec:
-  strategy:
-    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
   template:
     metadata:
       labels:
