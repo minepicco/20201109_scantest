@@ -69,7 +69,7 @@ jobs:
             docker stop web
 
       - run:
-          name: Prisma Cloud Vuln/Compliance check
+          name: Twistlock Vuln/Compliance check
           command: |
             curl -k -u $tl_u:$tl_p --output twistcli $TL_URL"/api/v1/util/twistcli"
             chmod +x twistcli
@@ -121,7 +121,7 @@ jobs:
             cat web2.yaml >> web1.yaml
             
       - run:
-          name: Prisma Cloud scan IaC
+          name: Twistlock scan IaC
           command: |
             curl -k -u $tl_u:$tl_p --output twistcli $TL_URL"/api/v1/util/twistcli"
             chmod +x twistcli
