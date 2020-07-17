@@ -126,7 +126,7 @@ jobs:
       - run:
           name: Create Kubernetes Manifest
           command: |
-            deploy_image=$addr"/"$prod_repo"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_PREVIOUS_BUILD_NUM
+            deploy_image=$imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_PREVIOUS_BUILD_NUM
             echo "      - image: "$deploy_image >> web1.yaml
             cat web2.yaml >> web1.yaml
             
