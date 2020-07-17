@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Build Image
           command: |
-            echo $CIRCLE_PROJECT_REPONAME
+            docker login -u $docker_user -p $docker_pass
             docker build --tag $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM .
 
       - run:
