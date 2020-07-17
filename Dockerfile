@@ -1,4 +1,4 @@
-From artifactory.nohara/docker/nginx:1.17
+From apache:2.4
 MAINTAINER macnica <container_sol@cs.macnica.net>
-COPY index.html /usr/share/nginx/html/
-HEALTHCHECK CMD curl http://localhost:8080
+COPY index.html /usr/local/apache2/htdocs/
+HEALTHCHECK CMD curl http://localhost:80
