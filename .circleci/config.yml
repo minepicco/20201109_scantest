@@ -61,12 +61,12 @@ jobs:
             docker login -u $docker_user -p $docker_pass
             docker build --tag $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM .
 
-   #   - run:
-   #       name: simple test
-   #       command: |
-   #         docker run --rm --name web -p 8080:80 -d $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM
-   #         curl http://localhost:8080
-   #         docker stop web
+      - run:
+          name: simple test
+          command: |
+            docker run --rm --name web -p 80:80 -d $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM
+            curl http://localhost
+            docker stop web
 
       - run:
           name: Twistlock Vuln/Compliance check
