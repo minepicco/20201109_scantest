@@ -1,5 +1,5 @@
-From httpd:2.4.43-alpine
+From nginx:1.19.1-alpine
 MAINTAINER macnica <container_sol@cs.macnica.net>
-COPY index.html /usr/local/apache2/htdocs/
+COPY index.html /usr/share/nginx/html/
 HEALTHCHECK CMD curl http://localhost
 EXPOSE 80
