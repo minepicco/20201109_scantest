@@ -34,27 +34,10 @@ jobs:
     executor: builder
     
     environment:
-#      dev_repo: "docker-local"
-#      imagename: "artifactory.nohara/docker-local"
       imagename: "minepicco"
       
     steps:
       - checkout
-      
- #     - run:
- #         name: Prepare Environment -- Install JFrog CLI
- #         command: |
- #           sudo apt-get update && sudo apt-get install -y curl
- #           curl -fL https://getcli.jfrog.io | sh
-
-#      - run:
-#          name: Prepare Environment -- Add insecure-registries and hostname
-#          command: |
-#            echo '{ "insecure-registries" : ["artifactory.nohara"] }' > daemon.json
-#            sudo mv daemon.json /etc/docker/
-#            sudo cat /etc/hosts > hosts && echo $addr" artifactory.nohara" >> hosts
-#            sudo mv hosts /etc/
-#            sudo service docker restart
                      
       - run:
           name: Build Image
@@ -75,16 +58,7 @@ jobs:
             curl -k -u $tl_u:$tl_p --output twistcli $TL_URL"/api/v1/util/twistcli"
             chmod +x twistcli
             ./twistcli images scan --details --address $TL_URL -u $tl_u -p $tl_p --ci $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM 
-            
-#      - run:
-#          name: JFrogCLI config, image push and Licence policy scan
-#          command: |
-#            ./jfrog rt config --user=$juser --password=$jpass --url="http://artifactory.nohara/artifactory" $jid
-#            ./jfrog rt docker-push $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM $dev_repo --build-name=$CIRCLE_PROJECT_REPONAME --build-number=$CIRCLE_BUILD_NUM
-#            ./jfrog rt bce $CIRCLE_PROJECT_REPONAME $CIRCLE_BUILD_NUM
-#            ./jfrog rt bag $CIRCLE_PROJECT_REPONAME $CIRCLE_BUILD_NUM
-#            ./jfrog rt bp $CIRCLE_PROJECT_REPONAME $CIRCLE_BUILD_NUM
-#            ./jfrog rt bs $CIRCLE_PROJECT_REPONAME $CIRCLE_BUILD_NUM
+
       - run:
           name: Publish Image
           command: |
@@ -101,20 +75,12 @@ jobs:
   deploy:
     executor: deployer
     environment:
-#      prod_repo: "docker-prod"
-#      imagename: "artifactory.nohara/docker-prod"
       comp: "low"
       imagename: "minepicco"
       
     steps:
       - checkout
       - setup_remote_docker
-
-#      - run:
-#          name: JFrogCLI promote image to production
-#          command: |
-#            /jfrog rt config --user=$juser --password=$jpass --url="http://"$addr"/artifactory" $jid
-#            /jfrog rt bpr $CIRCLE_PROJECT_REPONAME $CIRCLE_PREVIOUS_BUILD_NUM $prod_repo
 
       - run:
           name: Configure gcloud cli
