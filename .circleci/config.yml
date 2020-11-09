@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Build Image
           command: |
-            docker build --tag minepicco/slacker:1.0
+            docker build --tag minepicco/slacker:1.0 .
 
       - run:
           name: simple test
