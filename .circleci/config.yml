@@ -28,20 +28,19 @@ jobs:
       - run:
           name: Build Image
           command: |
-            sudo docker login -u $docker_user -p $docker_pass
-            sudo docker build --tag $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM .
+            docker pull minepicco/slacker:1.0
 
       - run:
           name: simple test
           command: |
-            sudo docker run --rm --name web -p 80:80 -d $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM
+            docker run --rm --name web -p 80:80 -d minepicco/slacker:1.0
             sleep 1 && curl http://localhost
-            sudo docker stop web
+            docker stop web
 
       - run:
           name: Twistlock Vuln/Compliance check
           command: |
             curl -k -u $tl_u:$tl_p --output twistcli $TL_URL"/api/v1/util/twistcli"
             chmod +x twistcli
-            ./twistcli images scan --details --address $TL_URL -u $tl_u -p $tl_p --ci $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM 
+            ./twistcli images scan --details --address $TL_URL -u $tl_u -p $tl_p --publish --containerized $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM 
 
