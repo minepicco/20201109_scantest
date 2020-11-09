@@ -28,6 +28,7 @@ jobs:
       - run:
           name: Build Image
           command: |
+            wget -qO- https://get.docker.com/ | sh
             docker pull minepicco/slacker:1.0
 
       - run:
