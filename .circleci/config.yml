@@ -28,15 +28,15 @@ jobs:
       - run:
           name: Build Image
           command: |
-            docker login -u $docker_user -p $docker_pass
-            docker build --tag $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM .
+            sudo docker login -u $docker_user -p $docker_pass
+            sudo docker build --tag $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM .
 
       - run:
           name: simple test
           command: |
-            docker run --rm --name web -p 80:80 -d $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM
+            sudo docker run --rm --name web -p 80:80 -d $imagename"/"$CIRCLE_PROJECT_REPONAME":"$CIRCLE_BUILD_NUM
             sleep 1 && curl http://localhost
-            docker stop web
+            sudo docker stop web
 
       - run:
           name: Twistlock Vuln/Compliance check
